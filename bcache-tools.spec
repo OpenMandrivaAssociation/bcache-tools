@@ -1,7 +1,7 @@
 Summary: Tools for Linux kernel block layer cache
 Name: bcache-tools
 Version: 1.0.8
-Release: 1
+Release: 2
 License: GPLv2
 Group: System/Base
 URL: http://bcache.evilpiepirate.org/
