@@ -1,6 +1,6 @@
-diff -ruN bcache-tools-1.0.8/69-bcache.rules bcache-tools-1.0.8.2/69-bcache.rules
---- bcache-tools-1.0.8/69-bcache.rules	2014-12-04 23:51:24.000000000 +0100
-+++ bcache-tools-1.0.8.2/69-bcache.rules	2015-02-07 22:32:35.000000000 +0100
+diff -ruN bcache-tools-1.1.orig/69-bcache.rules bcache-tools-1.1/69-bcache.rules
+--- bcache-tools-1.1.orig/69-bcache.rules	2019-12-12 13:51:01.000000000 +0100
++++ bcache-tools-1.1/69-bcache.rules	2021-01-30 12:10:02.242616633 +0100
 @@ -22,11 +22,14 @@
  RUN+="bcache-register $tempnode"
  LABEL="bcache_backing_end"
@@ -21,9 +21,9 @@ diff -ruN bcache-tools-1.0.8/69-bcache.rules bcache-tools-1.0.8.2/69-bcache.rule
  
  LABEL="bcache_end"
  
-diff -ruN bcache-tools-1.0.8/bcache-params.c bcache-tools-1.0.8.2/bcache-params.c
---- bcache-tools-1.0.8/bcache-params.c	1970-01-01 01:00:00.000000000 +0100
-+++ bcache-tools-1.0.8.2/bcache-params.c	2015-02-07 22:32:35.000000000 +0100
+diff -ruN bcache-tools-1.1.orig/bcache-params.c bcache-tools-1.1/bcache-params.c
+--- bcache-tools-1.1.orig/bcache-params.c	1970-01-01 01:00:00.000000000 +0100
++++ bcache-tools-1.1/bcache-params.c	2021-01-30 12:10:02.243616625 +0100
 @@ -0,0 +1,196 @@
 +/*
 + * Author: Rolf Fokkens <rolf@rolffokkens.nl>
@@ -221,9 +221,9 @@ diff -ruN bcache-tools-1.0.8/bcache-params.c bcache-tools-1.0.8.2/bcache-params.
 +    return 0;
 +}
 +
-diff -ruN bcache-tools-1.0.8/dracut/module-setup.sh bcache-tools-1.0.8.2/dracut/module-setup.sh
---- bcache-tools-1.0.8/dracut/module-setup.sh	2014-12-04 23:51:24.000000000 +0100
-+++ bcache-tools-1.0.8.2/dracut/module-setup.sh	2015-02-07 22:32:35.000000000 +0100
+diff -ruN bcache-tools-1.1.orig/dracut/module-setup.sh bcache-tools-1.1/dracut/module-setup.sh
+--- bcache-tools-1.1.orig/dracut/module-setup.sh	2019-12-12 13:51:01.000000000 +0100
++++ bcache-tools-1.1/dracut/module-setup.sh	2021-01-30 12:10:02.243616625 +0100
 @@ -29,6 +29,9 @@
  }
  
@@ -235,37 +235,41 @@ diff -ruN bcache-tools-1.0.8/dracut/module-setup.sh bcache-tools-1.0.8.2/dracut/
 +        ${udevdir}/bcache-params
      inst_rules 69-bcache.rules
  }
-diff -ruN bcache-tools-1.0.8/.gitignore bcache-tools-1.0.8.2/.gitignore
---- bcache-tools-1.0.8/.gitignore	2014-12-04 23:51:24.000000000 +0100
-+++ bcache-tools-1.0.8.2/.gitignore	2015-02-07 22:32:35.000000000 +0100
-@@ -1,6 +1,7 @@
- /bcache-super-show
- /bcache-test
- /bcache-register
-+/bcache-params
- /make-bcache
- /probe-bcache
- .*
-diff -ruN bcache-tools-1.0.8/Makefile bcache-tools-1.0.8.2/Makefile
---- bcache-tools-1.0.8/Makefile	2014-12-04 23:51:24.000000000 +0100
-+++ bcache-tools-1.0.8.2/Makefile	2015-02-07 22:32:35.000000000 +0100
+diff -ruN bcache-tools-1.1.orig/.gitignore.orig bcache-tools-1.1/.gitignore.orig
+--- bcache-tools-1.1.orig/.gitignore.orig	1970-01-01 01:00:00.000000000 +0100
++++ bcache-tools-1.1/.gitignore.orig	2019-12-12 13:51:01.000000000 +0100
+@@ -0,0 +1,8 @@
++/bcache-super-show
++/bcache-test
++/bcache-register
++/make-bcache
++/probe-bcache
++/bcache
++.*
++/*.o
+diff -ruN bcache-tools-1.1.orig/Makefile bcache-tools-1.1/Makefile
+--- bcache-tools-1.1.orig/Makefile	2019-12-12 13:51:01.000000000 +0100
++++ bcache-tools-1.1/Makefile	2021-01-30 12:12:34.126303769 +0100
 @@ -5,11 +5,11 @@
  INSTALL=install
  CFLAGS+=-O2 -Wall -g
  
--all: make-bcache probe-bcache bcache-super-show bcache-register
-+all: make-bcache probe-bcache bcache-super-show bcache-register bcache-params
+-all: make-bcache probe-bcache bcache-super-show bcache-register bcache
++all: make-bcache probe-bcache bcache-super-show bcache-register bcache bcache-params
  
--install: make-bcache probe-bcache bcache-super-show
-+install: make-bcache probe-bcache bcache-super-show bcache-register bcache-params
- 	$(INSTALL) -m0755 make-bcache bcache-super-show	$(DESTDIR)${PREFIX}/sbin/
+ install: make-bcache probe-bcache bcache-super-show
+ 	$(INSTALL) -m0755 make-bcache bcache-super-show	bcache $(DESTDIR)${PREFIX}/sbin/
 -	$(INSTALL) -m0755 probe-bcache bcache-register		$(DESTDIR)$(UDEVLIBDIR)/
-+	$(INSTALL) -m0755 probe-bcache bcache-register bcache-params	$(DESTDIR)$(UDEVLIBDIR)/
++	$(INSTALL) -m0755 probe-bcache bcache-register bcache-params		$(DESTDIR)$(UDEVLIBDIR)/
  	$(INSTALL) -m0644 69-bcache.rules	$(DESTDIR)$(UDEVLIBDIR)/rules.d/
  	$(INSTALL) -m0644 -- *.8 $(DESTDIR)${PREFIX}/share/man/man8/
  	$(INSTALL) -D -m0755 initramfs/hook	$(DESTDIR)/usr/share/initramfs-tools/hooks/bcache
-@@ -30,3 +30,4 @@
- bcache-super-show: CFLAGS += -std=gnu99
- bcache-super-show: bcache.o
+@@ -35,6 +35,8 @@
+ 
  bcache-register: bcache-register.o
+ 
 +bcache-params: bcache-params.o
++
+ bcache: CFLAGS += `pkg-config --cflags blkid uuid smartcols`
+ bcache: LDLIBS += `pkg-config --libs blkid uuid smartcols`
+ bcache: CFLAGS += -std=gnu99
