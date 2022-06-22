@@ -4,7 +4,7 @@
 Summary: Tools for Linux kernel block layer cache
 Name: bcache-tools
 Version: 1.1
-Release: 1
+Release: 2
 License: GPLv2
 URL: http://bcache.evilpiepirate.org/
 VCS: git://git.kernel.org/pub/scm/linux/kernel/git/colyli/bcache-tools.git
@@ -38,6 +38,7 @@ Patch5: bcache-status-python3.patch
 Patch6: bcache-status-rootgc.patch
 # Fedora packaging guidelines require man pages, none was provided for bcache. Add a placeholder
 Patch7: bcache-tools-1.1-man.patch
+Patch8: bcache-tools-1.1-sbindir.patch
 Conflicts: dracut < 034
 BuildRequires: pkgconfig(blkid)
 BuildRequires: pkgconfig(uuid)
@@ -62,6 +63,7 @@ chmod +x configure
 %patch5 -p1 -b .python3
 %patch6 -p1 -b .rootgc
 %patch7 -p1 -b .man
+%patch8 -p1
 
 %build
 %configure
@@ -77,6 +79,7 @@ mkdir -p \
 
 %make_install \
     INSTALL="install -p" \
+    SBINDIR=%{_sbindir} \
     UDEVLIBDIR=%{_udevlibdir} \
     DRACUTLIBDIR=%{dracutlibdir} \
     MANDIR=%{_mandir}
