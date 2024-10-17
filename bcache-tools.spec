@@ -6,7 +6,7 @@ Name: bcache-tools
 Version: 1.1
 Release: 3
 License: GPLv2
-URL: http://bcache.evilpiepirate.org/
+URL: https://bcache.evilpiepirate.org/
 VCS: git://git.kernel.org/pub/scm/linux/kernel/git/colyli/bcache-tools.git
 # git clone git://git.kernel.org/pub/scm/linux/kernel/git/colyli/bcache-tools.git
 # cd bcache-tools/
