@@ -40,6 +40,11 @@ Patch6: bcache-status-rootgc.patch
 Patch7: bcache-tools-1.1-man.patch
 Patch8: bcache-tools-1.1-sbindir.patch
 Conflicts: dracut < 034
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires: pkgconfig(blkid)
 BuildRequires: pkgconfig(uuid)
 BuildRequires: pkgconfig(smartcols)
